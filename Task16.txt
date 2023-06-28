@@ -1,0 +1,138 @@
+
+Task-16:   Selenium Locators
+
+
+1. 	Write a Selenium script that opens the Firefox browser, maximizes the browser window, 
+	navigates to "http://google.com", prints the URL of the current page, reloads the page, 
+	and closes the browser.
+	
+Solution: 
+	
+package GuviScripts;
+
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class Task16Problem1 {
+
+	public static void main(String[] args) throws Exception {
+		
+		FirefoxDriver ffd = new FirefoxDriver(); //Create a object to Firefox driver
+		
+		ffd.get("http://google.com");  // Launching the browser
+		
+		ffd.manage().window().maximize();  //Maximize the browser
+		
+		String url = ffd.getCurrentUrl();  //Storing the current URL value 
+		
+		System.out.println(url);  //Printing the url
+		
+		Thread.sleep(2000);
+		
+		ffd.navigate().refresh();  //reloads the page
+		
+		ffd.quit();	  //Close the browser
+	}
+}
+
+Output:
+https://www.google.com/?gws_rd=ssl
+
+----------------------------------------------------------------------------------------------------------------------------
+
+2. 	Write a Selenium Java script that opens the Chrome browser, navigates to "https://www.demoblaze,.com/", 
+	maximizes the browser window, verifies if the title of the page is "STORE", and prints "Page landed on correct website"
+	if the title matches, else prints "Page not landed on correct website".
+Solution:
+	
+package GuviScripts;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Task16Problem2 {
+
+	public static void main(String[] args) throws Exception {
+		
+		WebDriver driver = new ChromeDriver();  //Create a object to WebDriver interface and Chromedriver class
+ 
+		driver.get("https://www.demoblaze.com/");  // Launching the browser
+		
+		driver.manage().window().maximize();  //Maximize the browser
+		
+		Thread.sleep(1000);
+		
+		// Verify the title of page
+		if(driver.getTitle().equals("STORE"))
+		{
+			System.out.println("Page landed on correct website");
+		}
+		else {
+			System.out.println("Page not landed on correct website");
+		}
+		
+		Thread.sleep(2000);
+		
+		driver.quit();	 //Close the browser
+	}
+}
+Output:
+Page landed on correct website
+
+----------------------------------------------------------------------------------------------------------------------------
+
+3. 	Write a Selenium Java script that opens the chrome browser, navigates to "https:/www.wikipedia.org", 
+	maximizes the browser window, searches for the query "Artificial Intelligence", 
+	clicks on the "History" section in the search results, and prints the title of the section.
+	
+Solution: 
+package GuviScripts;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+
+public class Task16Problem3 {
+
+	public static void main(String[] args) throws Exception {
+		
+		//Create a object to WebDriver interface and Chromedriver class
+		WebDriver driver = new ChromeDriver();
+
+		// Launching the browser
+		driver.get("https://www.wikipedia.org/");
+		
+		//Maximize the browser
+		driver.manage().window().maximize();
+		
+		Thread.sleep(1000);
+		
+		if(driver.getTitle().equals("Wikipedia"))
+		{
+			
+			WebElement search = driver.findElement(By.id("searchInput")); // Identify the search locator
+				search.sendKeys("Artificial Intelligence");  // Entering text in search field
+			
+			driver.findElement(By.xpath("//button[@type='submit']")).click(); // click on search bar
+			
+			WebElement history = driver.findElement(By.xpath("//li[@id='toc-History']/a/div")); //Identify the history locator
+			history.click();  // click on history option
+			
+			if(driver.getTitle().equals("Artificial intelligence - Wikipedia")) {
+				System.out.println(driver.getTitle());  //Printing the page title
+			}
+			
+			Thread.sleep(2000);
+			
+			//Close the browser
+			driver.quit();	
+		}
+		else {
+			System.out.println("Page not landed on correct website");
+		}
+	}
+}
+
+Output:
+Artificial intelligence - Wikipedia
